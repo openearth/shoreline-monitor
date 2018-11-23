@@ -1,4 +1,4 @@
-// import mapboxgl from 'mapbox-gl';
+import mapboxgl from 'mapbox-gl';
 import TransectDialog from './TransectDialog.vue'
 import {mapLayers} from './map-layers-config.js'
 
@@ -20,6 +20,7 @@ export default {
   mounted () {
     this.map = this.$refs.map.map
     this.map.on('load', () => {
+      this.map.addControl(new mapboxgl.NavigationControl());
 
       mapLayers.forEach((layer) => {
         console.log(layer)

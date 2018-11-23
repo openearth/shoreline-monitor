@@ -177,12 +177,20 @@ const mapLayers = [
         "interpolate",
         ["linear"],
         ["zoom"],
-        0,
-        2,
+        4,
         9,
-        18
+        9,
+        30
       ],
-      "circle-blur": 2,
+      "circle-blur": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        0,
+        0.28,
+        9,
+        2
+      ],
       "circle-color": "#ffffff"
     }
   },
@@ -201,10 +209,10 @@ const mapLayers = [
         "interpolate",
         ["linear"],
         ["zoom"],
-        0,
-        1,
+        4,
+        10,
         9,
-        20
+        35
       ],
       "circle-color": [
         "step",
@@ -228,7 +236,15 @@ const mapLayers = [
         9,
         1
       ],
-      "circle-blur": 1,
+      "circle-blur": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        0,
+        0.28,
+        9,
+        1
+      ],
     }
   },
   {
@@ -248,10 +264,18 @@ const mapLayers = [
         ["zoom"],
         0,
         2,
-        9,
-        18
+        4,
+        9
       ],
-      "circle-blur": 2,
+      "circle-blur": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        0,
+        0.28,
+        9,
+        2
+      ],
       "circle-color": "#ffffff"
     }
   },
@@ -271,9 +295,9 @@ const mapLayers = [
         ["linear"],
         ["zoom"],
         0,
-        1,
-        9,
-        20
+        2,
+        4,
+        10
       ],
       "circle-color": [
         "step",
@@ -294,10 +318,18 @@ const mapLayers = [
         ["zoom"],
         0,
         0.28,
-        9,
+        4,
         1
       ],
-      "circle-blur": 1,
+      "circle-blur": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        0,
+        0,
+        9,
+        2
+      ],
     }
   }
 ]

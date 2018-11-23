@@ -33,7 +33,7 @@
             This dataset is created in collaboration with the Delft University of Technology.
           </p>
           <p>
-            <img alt="" src="src/assets/TUDelftLogo.png"/>
+            <img src="src/assets/logo.png"/> 
           </p>
         </div>
         <div class="extra content info-buttons-content" data-dataset="shoreline">
