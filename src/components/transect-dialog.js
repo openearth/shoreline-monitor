@@ -1,3 +1,10 @@
+import Highcharts from 'highcharts'
+import Exporting from 'highcharts/modules/exporting'
+Exporting(Highcharts)
+
+
+import moment from 'moment'
+
 export default {
   props: {
     dialog: {
@@ -8,22 +15,42 @@ export default {
     }
   },
   data: () => ({
-    table: {}
+    table: {},
+    headers: [{
+        text: "",
+        sortable: false,
+        value: 'name'
+      },
+      {
+        text: 'Properties',
+        value: 'data',
+        align: 'right',
+      }
+    ],
+    items: [{
+        value: false,
+        name: 'Country',
+        data: "",
+      },
+      {
+        value: false,
+        name: 'Profile',
+        data: ""
+      },
+      {
+        value: false,
+        name: 'Rate of Change',
+        data: "",
+      },
+      {
+        value: false,
+        name: 'Sandy',
+        data: "",
+      }
+    ]
   }),
   mounted () {
-    // this.$on('dialog', (dialog) => {
-    //   console.log('event', dialog)
-    //
-    // })
   },
-  // watch: {
-  //   dialog: {
-  //     handler: function(dialog) {
-  //       this.dialog = dialog
-  //       console.log('dialog', this.dialog)
-  //     }
-  //   }
-  // },
   methods: {
     getProfileData(id) {
       var parts = _.split(id, "_");
@@ -37,37 +64,80 @@ export default {
         section: section
       });
 
-      fetch(url, {
-        headers: {
-          "Access-Control-Expose-Headers": "*"
-        }
-      })
+      fetch(url)
       .then((res) => {
         return res.json()
       })
       .then((data) => {
-        console.log(data)
-
         var filteredFeatures = data.features.filter((feature) => {
-          console.log(feature.properties.transect_id, feature.properties.transect_id === id)
           return feature.properties.transect_id === id
         })
-        console.log('hoi', filteredFeatures)
+        var feature = filteredFeatures[0]
+
         this.table = {}
-        this.table["Country"] = filteredFeatures[0].properties.country_name
-        this.table["Profile"] = id
-        this.table["Rate of Change"] = filteredFeatures[0].properties.change_rate.toFixed(2) + " +/- " + filteredFeatures[0].properties.change_rate_unc.toFixed(2) + " m/year"
-        this.table["Sandy?"] = filteredFeatures[0].properties.flag_sandy
-        console.log(this.table)
-        // var feature = _.first(filteredFeatures);
-        // console.log(feature)
-        // // createShoreChart(feature);
-        // var tableTemplate = _.template(document.getElementById('shoreline-chart-template').innerHTML);
-        // var rendered = tableTemplate(feature.properties);
-        // console.log(filteredFeatures, feature)
-        // document.getElementById('chart-table').html(rendered);
-        // document.getElementById('chart-modal')
-        //   .show();
+        this.items.forEach(item => {
+          if(item.name==="Country") {item.data = feature.properties.country_name}
+          if(item.name==="Profile") {item.data = id}
+          if(item.name==="Rate of Change") {item.data = feature.properties.change_rate.toFixed(2) + " +/- " + feature.properties.change_rate_unc.toFixed(2) + " m/year"}
+          if(item.name==="Sandy") {item.data = feature.properties.flag_sandy}
+        })
+
+        console.log(feature)
+        var dt = feature.properties.dt
+        var dates = dt.map(x =>{
+          return moment("1984").add(x * 365, 'day').valueOf()
+        })
+
+        var points = feature.properties.distances.map((d, i) => {
+          return [dates[i], d]
+        })
+        var b =  feature.properties.intercept
+        var a =  feature.properties.change_rate
+        var startend = [[dates[0], b], [dates[dates.length - 1], b + dt[dt.length - 1] * a]]
+
+        Highcharts.chart('container', {
+            chart: {
+
+            },
+            xAxis: {
+                min: dates[0],
+                max: dates[dates.length - 1],
+                type: 'datetime',
+                dateTimeLabelFormats: {
+                    day: '%e of %b'
+                }
+            },
+            yAxis: {
+                min: 0
+            },
+            title: {
+                text: 'Shoreline profile'
+            },
+            legend: {
+              enabled: false
+            },
+            series: [{
+                type: 'line',
+                name: 'Regression Line',
+                data: startend,
+                marker: {
+                    enabled: false
+                },
+                states: {
+                    hover: {
+                        lineWidth: 0
+                    }
+                },
+                enableMouseTracking: false
+            }, {
+                type: 'scatter',
+                name: 'Observations',
+                data: points,
+                marker: {
+                    radius: 4
+                }
+            }]
+        });
       })
     }
   },
