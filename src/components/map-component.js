@@ -6,6 +6,7 @@ export default {
   data: () => ({
     map: null,
     transect_id: "BOX_120_124_53",
+    hover_id: "",
     dialog: false
   }),
   watch: {
@@ -26,13 +27,16 @@ export default {
       })
       this.map.on('mousemove', 'shoreline-profiles', (e) => {
         this.map.getCanvas().style.cursor = 'pointer';
-        this.map.setFilter("shoreline-profiles-hover", ["==", "Transect_id", e.features[0].properties.Transect_id])
+        if(this.hover_id !== e.features[0].properties.Transect_id) {
+          this.hover_id = e.features[0].properties.Transect_id
+          this.map.setFilter("shoreline-profiles-hover", ["==", "Transect_id", this.hover_id])
+        }
       })
 
       this.map.on('mouseleave', 'shoreline-profiles', () => {
         this.map.getCanvas().style.cursor = '';
         this.map.setFilter("shoreline-profiles-hover", ["==", "Transect_id", ""])
-
+        this.hover_id = ""
       })
 
       this.map.on('click', "shoreline-profiles", (e) => {

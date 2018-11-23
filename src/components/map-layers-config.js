@@ -149,9 +149,9 @@ const mapLayers = [
         ["linear"],
         ["zoom"],
         0,
-        10,
+        6,
         22,
-        45
+        42
       ],
       "text-allow-overlap": true,
       "text-rotation-alignment": "map"
@@ -163,15 +163,84 @@ const mapLayers = [
     'filter': ['==', 'Transect_id', '']
   },
   {
+    id: "shoreline-aggregated-glow-middle",
+    type: "circle",
+    source: {
+      type: "vector",
+      url: "mapbox://gerbenha.6z18bebw"
+    },
+    "minzoom": 4,
+    "maxzoom": 9,
+    "source-layer": "Aggregatedpointsz5-bsf5g2",
+    paint: {
+      "circle-radius": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        0,
+        2,
+        9,
+        18
+      ],
+      "circle-blur": 2,
+      "circle-color": "#ffffff"
+    }
+  },
+  {
+    id: "shoreline-aggregated-middle",
+    type: "circle",
+    source: {
+      type: "vector",
+      url: "mapbox://gerbenha.6z18bebw"
+    },
+    "minzoom": 4,
+    "maxzoom": 9,
+    "source-layer": "Aggregatedpointsz5-bsf5g2",
+    paint: {
+      "circle-radius" : [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        0,
+        1,
+        9,
+        20
+      ],
+      "circle-color": [
+        "step",
+        ["get", "NormalizedValue"],
+        "#D7191C",
+        -0.6,
+        "#FDAE61",
+        -0.2,
+        "#FFFFBF",
+        0.2,
+        "#A6D96A",
+        0.6,
+        "#1A9641"
+      ],
+      "circle-opacity": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        0,
+        0.28,
+        9,
+        1
+      ],
+      "circle-blur": 1,
+    }
+  },
+  {
     id: "shoreline-aggregated-glow",
     type: "circle",
     source: {
       type: "vector",
-      url: "mapbox://camvdvries.cjkjybd4"
+      url: "mapbox://gerbenha.0palcbmn"
     },
     "minzoom": 0,
-    "maxzoom": 9,
-    "source-layer": "Aggregatedpoints-d2xahs",
+    "maxzoom": 4,
+    "source-layer": "Aggregatedpointsz0-0vqo71",
     paint: {
       "circle-radius": [
         "interpolate",
@@ -191,11 +260,11 @@ const mapLayers = [
     type: "circle",
     source: {
       type: "vector",
-      url: "mapbox://camvdvries.cjkjybd4"
+      url: "mapbox://gerbenha.0palcbmn"
     },
     "minzoom": 0,
-    "maxzoom": 9,
-    "source-layer": "Aggregatedpoints-d2xahs",
+    "maxzoom": 4,
+    "source-layer": "Aggregatedpointsz0-0vqo71",
     paint: {
       "circle-radius" : [
         "interpolate",

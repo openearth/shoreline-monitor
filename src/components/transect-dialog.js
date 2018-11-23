@@ -53,17 +53,12 @@ export default {
   },
   methods: {
     getProfileData(id) {
-      var parts = _.split(id, "_");
-      var box = parts[1];
-      var section = parts[2];
+      var parts = id.split("_")
+      var box = parts[1]
+      var section = parts[2]
 
-      var url = _.template(
-        'https://storage.googleapis.com/shoreline-monitor/features/<%- box %>/<%- section %>/BOX_<%- box %>_<%- section %>.json'
-      )({
-        box: box,
-        section: section
-      });
-
+      var url = `https://storage.googleapis.com/shoreline-monitor/features/${box}/${section}/BOX_${box}_${section}.json`
+      console.log(url)
       fetch(url)
       .then((res) => {
         return res.json()
@@ -91,35 +86,56 @@ export default {
         var points = feature.properties.distances.map((d, i) => {
           return [dates[i], d]
         })
+
+        var outliers = feature.properties.outliers_1.map(i => {
+          return [dates[i], dt[i]]
+        })
+        var outliers_2 = feature.properties.outliers_2.map(i => {
+          i += feature.properties.outliers_2.length
+          return [dates[i], dt[i]]
+        })
+        outliers = outliers.concat(outliers_2)
+        console.log( feature.properties.outliers_1, outliers,  feature.properties.outliers_2, outliers_2)
+
+        // create two points of the regression line
         var b =  feature.properties.intercept
         var a =  feature.properties.change_rate
-        var startend = [[dates[0], b], [dates[dates.length - 1], b + dt[dt.length - 1] * a]]
+        var b_unc = feature.properties.b_unc
+        var regrstartend = [[dates[0], b], [dates[dates.length - 1], b + dt[dt.length - 1] * a]]
+        var regrstartendplusunc= [[dates[0], b + b_unc], [dates[dates.length - 1], (b + b_unc) + dt[dt.length - 1] * a]]
+        var regrstartendminunc = [[dates[0], b - b_unc], [dates[dates.length - 1], (b - b_unc) + dt[dt.length - 1] * a]]
 
         Highcharts.chart('container', {
             chart: {
-
+              zoomType: 'xy',
+              panning: true,
+              panKey: 'shift'
             },
             xAxis: {
-                min: dates[0],
-                max: dates[dates.length - 1],
                 type: 'datetime',
-                dateTimeLabelFormats: {
-                    day: '%e of %b'
-                }
-            },
-            yAxis: {
-                min: 0
+                tickAmount: 30
             },
             title: {
                 text: 'Shoreline profile'
             },
+            subtitle: {
+                text: 'Click and drag to zoom in. Hold down shift key to pan.'
+            },
             legend: {
               enabled: false
+            },
+            tooltip: {
+              formatter: function () {
+                var s = `<b> ${id} </b><br>`
+                s += `Date: ${moment(this.x).format("YYYY-MM-DD")} <br>`
+                s += `Distance: ${this.y} [m]`
+                return s
+              }
             },
             series: [{
                 type: 'line',
                 name: 'Regression Line',
-                data: startend,
+                data: regrstartend,
                 marker: {
                     enabled: false
                 },
@@ -128,14 +144,56 @@ export default {
                         lineWidth: 0
                     }
                 },
-                enableMouseTracking: false
+                enableMouseTracking: false,
+                color: '#000000'
+            }, {
+                type: 'line',
+                name: 'Uncertainty',
+                data: regrstartendplusunc,
+                marker: {
+                    enabled: false
+                },
+                states: {
+                    hover: {
+                        lineWidth: 0
+                    }
+                },
+                enableMouseTracking: false,
+                color: '#8c8c8c',
+                dashStyle: "dash"
+            }, {
+                type: 'line',
+                name: 'Unertainty min',
+                data: regrstartendminunc,
+                marker: {
+                    enabled: false
+                },
+                states: {
+                    hover: {
+                        lineWidth: 0
+                    }
+                },
+                enableMouseTracking: false,
+                color: '#8c8c8c',
+                dashStyle: "dash"
             }, {
                 type: 'scatter',
                 name: 'Observations',
                 data: points,
                 marker: {
-                    radius: 4
+                    radius: 4,
+                    symbol: "circle"
                 }
+            },
+            {
+                type: 'scatter',
+                name: 'Outliers',
+                data: outliers,
+                marker: {
+                    radius: 5,
+                    symbol: "circle"
+                },
+                color: "red"
             }]
         });
       })
@@ -144,8 +202,10 @@ export default {
   computed: {
     showdialog: {
       // getter
-      get: function () {
-        this.getProfileData(this.transect_id)
+      get: function (e) {
+        if(this.dialog) {
+          this.getProfileData(this.transect_id)
+        }
         return this.dialog
       },
       // setter

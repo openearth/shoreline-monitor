@@ -19,6 +19,10 @@
                     <td class="text-xs-right">{{ props.item.data }}</td>
                   </template>
                 </v-data-table>
+                <v-spacer></v-spacer>
+                <div id="inquiries">
+                  For inquiries please fill in this <a href="https://docs.google.com/forms/d/e/1FAIpQLSfd6VpTH5WPaHrUm1ZQfN2FQ6az77Wd7BykEt-orWMMpIVYFA/viewform" target="_blank">form</a>.
+                </div>
               </v-flex>
             </v-layout>
           </v-container>
@@ -48,6 +52,12 @@
   max-width: 50vw;
   width: 50vw !important;
   padding: 0;
+}
+
+#inquiries {
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
 }
 
 </style>
