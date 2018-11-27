@@ -1,3 +1,13 @@
+import _ from 'lodash'
+
+const dashArray = _.flatten(
+  _.range(-10, 10).map(x => ["―".repeat(Math.abs(x)),x / 2]))
+  dashArray.pop()
+
+
+console.log([
+  "step",
+  ["get", "Value"]].concat(dashArray))
 const mapLayers = [
   {
     id: "shoreline-profiles",
@@ -9,33 +19,9 @@ const mapLayers = [
     "minzoom": 9,
     "source-layer": "ShorelineMonitorPoint-cpol2b",
     layout: {
-      "text-field": [
+      "text-field":  [
         "step",
-        ["get", "Value"],
-        "――――――",
-        -5,
-        "―――――",
-        -4,
-        "――――",
-        -3,
-        "―――",
-        -2,
-        "――",
-        -1,
-        "-",
-        0,
-        "―",
-        1,
-        "――",
-        2,
-        "―――",
-        3,
-        "――――",
-        4,
-        "―――――",
-        5,
-        "――――――"
-      ],
+        ["get", "Value"]].concat(dashArray),
       "text-anchor": [
         "step",
         ["get", "Value"],
@@ -44,7 +30,7 @@ const mapLayers = [
         "right"
       ],
       "text-font": [
-        "Overpass Mono Bold",
+        "Ubuntu Mono Bold",
         "Arial Unicode MS Regular"
       ],
       "text-rotate": [
@@ -99,31 +85,7 @@ const mapLayers = [
     layout: {
       "text-field": [
         "step",
-        ["get", "Value"],
-        "――――――",
-        -5,
-        "―――――",
-        -4,
-        "――――",
-        -3,
-        "―――",
-        -2,
-        "――",
-        -1,
-        "-",
-        0,
-        "―",
-        1,
-        "――",
-        2,
-        "―――",
-        3,
-        "――――",
-        4,
-        "―――――",
-        5,
-        "――――――"
-      ],
+        ["get", "Value"]].concat(dashArray),
       "text-anchor": [
         "step",
         ["get", "Value"],
@@ -132,7 +94,7 @@ const mapLayers = [
         "right"
       ],
       "text-font": [
-        "Overpass Mono Bold",
+        "Ubuntu Mono Bold",
         "Arial Unicode MS Regular"
       ],
       "text-rotate": [
@@ -176,20 +138,22 @@ const mapLayers = [
       "circle-radius": [
         "interpolate",
         ["linear"],
-        ["zoom"],
-        4,
+        ["get", "NormalizedValue"],
+        -1,
+        18,
+        0,
         9,
-        9,
-        30
+        1,
+        18
       ],
       "circle-blur": [
         "interpolate",
         ["linear"],
         ["zoom"],
         0,
-        0.28,
-        9,
-        2
+        0,
+        22,
+        1
       ],
       "circle-color": "#ffffff"
     }
@@ -205,14 +169,16 @@ const mapLayers = [
     "maxzoom": 9,
     "source-layer": "Aggregatedpointsz5-bsf5g2",
     paint: {
-      "circle-radius" : [
+      "circle-radius" :[
         "interpolate",
         ["linear"],
-        ["zoom"],
-        4,
+        ["get", "NormalizedValue"],
+        -1,
+        21,
+        0,
         10,
-        9,
-        35
+        1,
+        21
       ],
       "circle-color": [
         "step",
@@ -232,8 +198,8 @@ const mapLayers = [
         ["linear"],
         ["zoom"],
         0,
-        0.28,
-        9,
+        0.68,
+        22,
         1
       ],
       "circle-blur": [
@@ -241,9 +207,9 @@ const mapLayers = [
         ["linear"],
         ["zoom"],
         0,
-        0.28,
-        9,
-        1
+        1,
+        22,
+        2
       ],
     }
   },
@@ -261,20 +227,22 @@ const mapLayers = [
       "circle-radius": [
         "interpolate",
         ["linear"],
-        ["zoom"],
+        ["get", "NormalizedValue"],
+        -1,
+        8,
         0,
-        2,
         4,
-        9
+        1,
+        8
       ],
       "circle-blur": [
         "interpolate",
         ["linear"],
         ["zoom"],
         0,
-        0.28,
-        9,
-        2
+        0,
+        22,
+        1
       ],
       "circle-color": "#ffffff"
     }
@@ -290,14 +258,16 @@ const mapLayers = [
     "maxzoom": 4,
     "source-layer": "Aggregatedpointsz0-0vqo71",
     paint: {
-      "circle-radius" : [
+      "circle-radius" :[
         "interpolate",
         ["linear"],
-        ["zoom"],
+        ["get", "NormalizedValue"],
+        -1,
+        9,
         0,
-        2,
-        4,
-        10
+        5,
+        1,
+        9
       ],
       "circle-color": [
         "step",
@@ -317,8 +287,8 @@ const mapLayers = [
         ["linear"],
         ["zoom"],
         0,
-        0.28,
-        4,
+        0.68,
+        22,
         1
       ],
       "circle-blur": [
@@ -326,10 +296,10 @@ const mapLayers = [
         ["linear"],
         ["zoom"],
         0,
-        0,
-        9,
+        1,
+        22,
         2
-      ],
+      ]
     }
   }
 ]

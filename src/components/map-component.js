@@ -13,7 +13,6 @@ export default {
     dialog: {
       handler: function(dialog) {
         this.dialog = dialog
-        console.log('dialog', this.dialog)
       }
     }
   },
@@ -23,7 +22,6 @@ export default {
       this.map.addControl(new mapboxgl.NavigationControl());
 
       mapLayers.forEach((layer) => {
-        console.log(layer)
         this.map.addLayer(layer)
       })
       this.map.on('mousemove', 'shoreline-profiles', (e) => {
@@ -41,7 +39,6 @@ export default {
       })
 
       this.map.on('click', "shoreline-profiles", (e) => {
-        console.log('shoreline click', e, e.features[0])
         this.transect_id = e.features[0].properties.Transect_id
         this.dialog = true
       })
