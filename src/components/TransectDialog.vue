@@ -35,7 +35,11 @@
               </v-data-table>
               <v-spacer></v-spacer>
               <div id="inquiries">
-                For inquiries please fill in this <a href="https://docs.google.com/forms/d/e/1FAIpQLSfd6VpTH5WPaHrUm1ZQfN2FQ6az77Wd7BykEt-orWMMpIVYFA/viewform" target="_blank">form</a>.
+                Are you looking for additional data, such as:
+                Long-term shoreline change rates, Annual shorelines (available @ 30m resolution), Two-weekly shorelines (available @ 30m resolution) and/or a
+                Country-wide assessment on the state of the shoreline?
+                <br><br>
+                Fill in this inquiry <a href="https://docs.google.com/forms/d/e/1FAIpQLSfd6VpTH5WPaHrUm1ZQfN2FQ6az77Wd7BykEt-orWMMpIVYFA/viewform" target="_blank">form</a> to get in touch.
               </div>
             </v-flex>
           </v-layout>
@@ -44,6 +48,15 @@
       <v-card v-if="active === 1" id="timelapse-card">
         <v-card-text id="timelapse-text">
           <iframe id="timelapse-card" :src="timelapse_url" frameborder="0"></iframe>
+          <p>
+            This timelapse is provided by
+            <a href="https://earthengine.google.com/" target="_blank">
+              Google Earth Engine
+            </a>. See
+            <a href="https://earthengine.google.com/terms/" target="_blank">
+              terms of service
+            </a> for this timelapse.
+          </p>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -66,7 +79,7 @@
 
 iframe, .v-window-item, #transect-card, #timelapse-card, #timelapse-text{
   width: 60vw;
-  height: 70vh;
+  height: 65vh;
   margin: 0;
   padding: 0;
 }
