@@ -91,7 +91,7 @@ export default {
         this.lat = feature.geometry.coordinates[0][1]
         var dt = feature.properties.dt
         var dates = dt.map(x =>{
-          return moment(1984).add(x * 365, 'day').valueOf()
+          return moment("01-01-1984").add(x * 365, 'day').valueOf()
         })
 
         var points = feature.properties.distances.map((d, i) => {
@@ -130,7 +130,7 @@ export default {
             },
             yAxis: {
               title: {
-                text: 'Distances [m]'
+                text: 'Distance w.r.t. landward boundary [m]'
               }
             },
             title: {
@@ -231,14 +231,6 @@ export default {
       get: function () {
         if(this.dialog) {
           this.timelapse_url = `https://earthengine.google.com/iframes/timelapse_player_embed.html#v=${this.lat},${this.lon},12,latLng&t=0,0`
-          // console.log(this.timelapse_url)
-          // var timelapse = document.getElementById("timelapse-text")
-          // timelapse.innerHTML = ''
-          //
-          // var iframe = document.createElement('iframe');
-          // iframe.src = this.timelapse_url
-          //
-          // timelapse.appendChild(iframe)
           this.getProfileData(this.transect_id)
         }
         return this.dialog

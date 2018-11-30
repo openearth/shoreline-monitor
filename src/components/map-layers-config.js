@@ -1,7 +1,7 @@
 import _ from 'lodash'
 
 const dashArray = _.flatten(
-  _.range(-10, 10).map(x => ["―".repeat(Math.abs(x)),x / 2]))
+  _.range(-6, 6).map(x => ["―".repeat(Math.abs(x)),x / 2]))
   dashArray.pop()
 
 
@@ -129,11 +129,11 @@ const mapLayers = [
     type: "circle",
     source: {
       type: "vector",
-      url: "mapbox://gerbenha.6z18bebw"
+      url: "mapbox://gerbenha.062slfsd"
     },
     "minzoom": 4,
     "maxzoom": 9,
-    "source-layer": "Aggregatedpointsz5-bsf5g2",
+    "source-layer": "Aggregatedpointsz5-bwuc0m",
     paint: {
       "circle-radius": [
         "interpolate",
@@ -163,11 +163,11 @@ const mapLayers = [
     type: "circle",
     source: {
       type: "vector",
-      url: "mapbox://gerbenha.6z18bebw"
+      url: "mapbox://gerbenha.062slfsd"
     },
     "minzoom": 4,
     "maxzoom": 9,
-    "source-layer": "Aggregatedpointsz5-bsf5g2",
+    "source-layer": "Aggregatedpointsz5-bwuc0m",
     paint: {
       "circle-radius" :[
         "interpolate",
@@ -218,11 +218,11 @@ const mapLayers = [
     type: "circle",
     source: {
       type: "vector",
-      url: "mapbox://gerbenha.0palcbmn"
+      url: "mapbox://gerbenha.bkxj8nc1"
     },
     "minzoom": 0,
     "maxzoom": 4,
-    "source-layer": "Aggregatedpointsz0-0vqo71",
+    "source-layer": "Aggregatedpointsz0-7r6kje",
     paint: {
       "circle-radius": [
         "interpolate",
@@ -252,11 +252,11 @@ const mapLayers = [
     type: "circle",
     source: {
       type: "vector",
-      url: "mapbox://gerbenha.0palcbmn"
+      url: "mapbox://gerbenha.bkxj8nc1"
     },
     "minzoom": 0,
     "maxzoom": 4,
-    "source-layer": "Aggregatedpointsz0-0vqo71",
+    "source-layer": "Aggregatedpointsz0-7r6kje",
     paint: {
       "circle-radius" :[
         "interpolate",

@@ -1,6 +1,7 @@
-import mapboxgl from 'mapbox-gl';
+import mapboxgl from 'mapbox-gl'
 import TransectDialog from './TransectDialog.vue'
 import {mapLayers} from './map-layers-config.js'
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 
 export default {
   data: () => ({
@@ -18,7 +19,11 @@ export default {
   },
   mounted () {
     this.map = this.$refs.map.map
+    console.log(this)
     this.map.on('load', () => {
+      this.map.addControl(new MapboxGeocoder({
+        accessToken: "pk.eyJ1Ijoic2lnZ3lmIiwiYSI6Il8xOGdYdlEifQ.3-JZpqwUa3hydjAJFXIlMA"
+      }));
       this.map.addControl(new mapboxgl.NavigationControl());
 
       mapLayers.forEach((layer) => {
